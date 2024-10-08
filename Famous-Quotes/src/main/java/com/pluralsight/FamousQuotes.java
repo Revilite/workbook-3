@@ -1,5 +1,7 @@
 package com.pluralsight;
 
+import java.text.ParseException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.Random;
 
@@ -22,7 +24,10 @@ public class FamousQuotes {
                     scan.nextLine();
 
                     System.out.println(quotes[userNumber - 1]);
-                } catch (RuntimeException e) {
+                } catch (InputMismatchException e) {
+                    System.out.println("Thats not a number!");
+                    scan.nextLine();
+                } catch (Exception e) {
                     System.out.println("You picked a number out of bounds!");
                     e.getStackTrace();
                 }
@@ -34,7 +39,9 @@ public class FamousQuotes {
 
             System.out.println("Would you like to try again?  (Y/N)");
             mainLoop = scan.nextLine().toLowerCase();
-            if (!mainLoop.equals("y") || !mainLoop.equals("n")) {
+
+
+            if (!mainLoop.equals("y") && !mainLoop.equals("n")) {
                 System.out.println("Wrong answer, exiting program ^_^");
             }
 
