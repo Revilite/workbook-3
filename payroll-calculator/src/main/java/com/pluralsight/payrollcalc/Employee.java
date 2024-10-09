@@ -1,4 +1,4 @@
-package com.pluralsight.story;
+package com.pluralsight.payrollcalc;
 
 public class Employee {
     private int employeeId;
