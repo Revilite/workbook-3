@@ -25,15 +25,16 @@ public class StoreFront {
         return inventory;
     }
 
-    public static void displayAllProducts(HashMap<String, Product> inventory, HashMap<String, Product> cart) {
+    public static void displayAllProducts(HashMap<String, Product> inventory, HashMap<String, Product> cart) throws InterruptedException {
         Scanner scan = new Scanner(System.in);
         String productPageChoice = "";
 
-        for (String key : inventory.keySet()) {
-            System.out.println(inventory.get(key));
-        }
 
         while (!productPageChoice.equals("b")) {
+            for (String key : inventory.keySet()) {
+                System.out.println(inventory.get(key));
+            }
+
             System.out.println("""
                     Search for a item        (S)
                     Add an item to your cart (C)
@@ -42,11 +43,24 @@ public class StoreFront {
             productPageChoice = scan.nextLine().toLowerCase();
             switch (productPageChoice) {
                 case "s": {
-                    //Gets the item from inventory
-                    System.out.println("What is the SKU of the item your looking for?");
-                    String userSKU = scan.nextLine().toUpperCase();
-
-
+                    //Searches item by SKU (not case-sensitive)
+                    boolean invalidSKU = true;
+                    String userSKU = "";
+                    while (invalidSKU) {
+                        System.out.println("What is the SKU of the item your looking for?");
+                        userSKU = scan.nextLine().toUpperCase();
+                        for (String key : inventory.keySet()) {
+                            if (key.equals(userSKU)) {
+                                invalidSKU = false;
+                            }
+                        }
+                        if (invalidSKU) {
+                            System.out.println("Invalid SKU");
+                        }
+                        else{
+                            System.out.println(inventory.get(userSKU));
+                        }
+                    }
                     //Gets user input if they want to save this item or not
                     System.out.println("Would you like to add this item to your cart? (Y/N)");
                     String addItemFromSearch = scan.nextLine().toLowerCase();
@@ -59,6 +73,7 @@ public class StoreFront {
                         break;
                     } else {
                         System.out.println("That isn't a choice");
+                        Thread.sleep(1000);
                     }
                 }
             }
@@ -90,7 +105,11 @@ public class StoreFront {
             userIsDone = scan.nextLine().toLowerCase();
             switch (userIsDone) {
                 case "p": {
+                    try{
                     displayAllProducts(inventory, cart);
+                    }catch (InterruptedException e){
+                        System.out.println("Cannot Display Products");
+                    }
                 }
             }
         }
