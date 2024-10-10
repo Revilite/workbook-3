@@ -11,7 +11,6 @@ import java.util.Scanner;
 public class SearchEngineLogger {
     public static void timeStamp(String input) throws IOException {
         BufferedWriter buffWrite = new BufferedWriter(new FileWriter("./src/main/resources/logs.txt"));
-
         buffWrite.write(input);
         //Always close scanners!
         buffWrite.close();
