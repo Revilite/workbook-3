@@ -42,15 +42,17 @@ public class StoreFront {
             switch (productPageChoice) {
                 case "s": {
                     //Searches item by SKU (not case-sensitive)
+                    //TODO: Maybe add department searching
                     boolean invalidSKU = true;
                     String userSKU = "";
                     while (invalidSKU) {
-                        System.out.println("What is the SKU of the item your looking for?");
+                        System.out.println("What is the SKU of the item your looking for? (type \"x\" to exit)");
                         userSKU = scan.nextLine().toUpperCase();
-                        for (String key : inventory.keySet()) {
-                            if (key.equals(userSKU)) {
-                                invalidSKU = false;
-                            }
+                        if (userSKU.equalsIgnoreCase("x")) {
+                            return;
+                        }
+                        if (inventory.containsKey(userSKU)) {
+                            invalidSKU = false;
                         }
                         if (invalidSKU) {
                             System.out.println("Invalid SKU");
@@ -66,6 +68,8 @@ public class StoreFront {
                     if (addItemFromSearch.equals("y")) {
                         cart.put(userSKU, inventory.get(userSKU));
                         inventory.remove(userSKU);
+                        System.out.println("Added Successfully!");
+                        Thread.sleep(1000);
                     } else if (addItemFromSearch.equals("n")) {
                         break;
                     } else {
@@ -73,8 +77,30 @@ public class StoreFront {
                         Thread.sleep(1000);
                     }
                 }
-                case "a": {
-
+                case "c": {
+                    boolean invalidSKU = true;
+                    while (invalidSKU) {
+                        System.out.println("Type the SKU of the item to add to the cart");
+                        String userSKU = scan.nextLine().toUpperCase();
+                        if (inventory.containsKey(userSKU)) {
+                            cart.put(userSKU, inventory.get(userSKU));
+                            inventory.remove(userSKU);
+                            invalidSKU = false;
+                        }
+                        if (invalidSKU) {
+                            System.out.println("Invalid SKU");
+                        } else {
+                            System.out.println("Added Successfully!");
+                            Thread.sleep(1000);
+                        }
+                    }
+                }
+                case "b": {
+                    break;
+                }
+                default: {
+                    System.out.println("That's not a good choice");
+                    Thread.sleep(1000);
                 }
             }
         }
