@@ -26,7 +26,7 @@ public class StoreFront {
         return inventory;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         Scanner scan = new Scanner(System.in);
         HashMap<String, Product> inventory = new HashMap<>();
         HashMap<String, Product> cart = new HashMap<>();
@@ -63,6 +63,13 @@ public class StoreFront {
                 }catch(InterruptedException e) {
                     e.printStackTrace();
                 }
+            }
+            else if(userIsDone.equalsIgnoreCase("E")){
+                return;
+            }
+            else{
+                System.out.println();
+                Thread.sleep(1000);
             }
         }
     }

@@ -6,15 +6,22 @@ import java.util.Scanner;
 public class DisplayAllProducts {
     private static Scanner scan = new Scanner(System.in);
 
+    public static void searchByDepartment(HashMap<String, Product> inventory, HashMap<String, Product> cart) {
+        boolean departmentSearch = true;
+        while(departmentSearch){
+            System.out.println("What department are you looking for?");
+            String department = scan.nextLine();
+            if(inventory.containsValue(department)){
+                System.out.println("Hello  WOrld");
+            }
+        }
+    }
 
-    public static void searchItem(HashMap<String, Product> inventory, HashMap<String, Product> cart) throws InterruptedException {
-        //Searches item by SKU (not case-sensitive)
-        //TODO: Maybe add department searching
+    public static void searchBySKU(HashMap<String, Product> inventory, HashMap<String, Product> cart) {
         boolean invalidSKU = true;
-        String userSKU;
         while (invalidSKU) {
             System.out.println("What is the SKU of the item your looking for? (type \"x\" to exit)");
-            userSKU = scan.nextLine().toUpperCase();
+            String userSKU = scan.nextLine().toUpperCase();
             if (userSKU.equalsIgnoreCase("x")) {
                 return;
             }
@@ -35,14 +42,29 @@ public class DisplayAllProducts {
                 cart.put(userSKU, inventory.get(userSKU));
                 inventory.remove(userSKU);
                 System.out.println("Added Successfully!");
-                Thread.sleep(1000);
-            } else if (addItemFromSearch.equals("n")) {
-                return;
             } else {
                 System.out.println("That isn't a choice");
+
+            }
+            try {
                 Thread.sleep(1000);
+                return;
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
+    }
+
+
+    public static void searchItem(HashMap<String, Product> inventory, HashMap<String, Product> cart) throws InterruptedException {
+        System.out.println("""
+               What would you like to search by?
+               Department (D)
+               Price      (P)
+               Name       (N)
+               SKU        (S)
+                
+                """);
 
     }
 
