@@ -29,12 +29,10 @@ public class StoreFront {
         Scanner scan = new Scanner(System.in);
         String productPageChoice = "";
 
-
         while (!productPageChoice.equals("b")) {
             for (String key : inventory.keySet()) {
                 System.out.println(inventory.get(key));
             }
-
             System.out.println("""
                     Search for a item        (S)
                     Add an item to your cart (C)
@@ -56,8 +54,7 @@ public class StoreFront {
                         }
                         if (invalidSKU) {
                             System.out.println("Invalid SKU");
-                        }
-                        else{
+                        } else {
                             System.out.println(inventory.get(userSKU));
                         }
                     }
@@ -75,6 +72,9 @@ public class StoreFront {
                         System.out.println("That isn't a choice");
                         Thread.sleep(1000);
                     }
+                }
+                case "a": {
+
                 }
             }
         }
@@ -105,9 +105,9 @@ public class StoreFront {
             userIsDone = scan.nextLine().toLowerCase();
             switch (userIsDone) {
                 case "p": {
-                    try{
-                    displayAllProducts(inventory, cart);
-                    }catch (InterruptedException e){
+                    try {
+                        displayAllProducts(inventory, cart);
+                    } catch (InterruptedException e) {
                         System.out.println("Cannot Display Products");
                     }
                 }
