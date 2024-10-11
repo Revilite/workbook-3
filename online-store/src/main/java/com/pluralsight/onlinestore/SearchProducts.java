@@ -23,8 +23,12 @@ public class SearchProducts {
                 System.out.println("We don't have that item!");
             } else {
                 inventory.remove(tempList.get(0).getSku());
-                System.out.println("Are you done adding items?");
+                System.out.println("Are you done adding items? (y/n)");
                 isUserFinished = scan.nextLine();
+                if (!isUserFinished.equalsIgnoreCase("y") && !isUserFinished.equalsIgnoreCase("n")) {
+                    System.out.println("That is not y or n, returning to items");
+                    Thread.sleep(1000);
+                }
             }
         } while (isUserFinished.equalsIgnoreCase("n"));
     }

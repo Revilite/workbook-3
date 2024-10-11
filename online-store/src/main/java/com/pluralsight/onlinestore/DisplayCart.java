@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class DisplayCart {
     private static Scanner scan = new Scanner(System.in);
 
-    public static HashMap[] displayCart(HashMap<String, Product> inventory, HashMap<String, Product> cart) throws InterruptedException {
+    public static void displayCart(HashMap<String, Product> inventory, HashMap<String, Product> cart) throws InterruptedException {
         for (String key : cart.keySet()) {
             System.out.println(cart.get(key));
         }
@@ -19,6 +19,7 @@ public class DisplayCart {
         while (!userInput.equalsIgnoreCase("b")) {
             if (userInput.equalsIgnoreCase("c")) {
                 System.out.println("I dont feel like doing this right now :(");
+                return;
             } else if (userInput.equalsIgnoreCase("r")) {
                 System.out.println("Enter the SKU of the item you want to remove");
                 String userSKU = scan.nextLine();
@@ -34,8 +35,5 @@ public class DisplayCart {
                 }
             }
         }
-
-
-        return new HashMap[]{inventory, cart};
     }
 }
