@@ -8,13 +8,25 @@ public class DisplayCart {
 
     public static void displayCart(HashMap<String, Product> inventory, HashMap<String, Product> cart) throws InterruptedException {
         Scanner scan = new Scanner(System.in);
+        String reset = "\033[1;0m";
+        String blueForeground = "\033[1;34m";
+        String redForeground = "\033[1;31m";
+        // testing remove later
+
+
         String userInput = "";
         while (!userInput.equalsIgnoreCase("3")) {
-            for (String key : cart.keySet()) {
-                System.out.println(cart.get(key));
+            double totalPrice = 0;
+            for (Product item : cart.values()) {
+                System.out.printf("""
+                        \033[1;31m%-33s    \033[1;34m     $%6.2f     \033[1;0m
+                        """, item.getProductName(), item.getPrice());
+                totalPrice += item.getPrice();
             }
             if (cart.size() == 0) {
-                System.out.println("\n \033[1;31mTheres nothing in your cart!\033[1;0m");
+                System.out.println(redForeground + "Theres nothing in your cart!" + reset);
+            } else {
+                System.out.printf("\n" + redForeground + "%-38s" + blueForeground + "    $%6.2f\n\n" + reset, "Total Price", totalPrice);
             }
             System.out.print("""
                     Checkout       (1)
@@ -22,8 +34,10 @@ public class DisplayCart {
                     Go Back        (3)
                     """);
             userInput = scan.nextLine();
+
+
             if (userInput.equalsIgnoreCase("1")) {
-                System.out.println("I dont feel like doing this right now :(");
+                CheckOut.mainCheckoutScreen(cart, totalPrice);
                 return;
             } else if (userInput.equalsIgnoreCase("2")) {
                 String isUserFinished = "n";
