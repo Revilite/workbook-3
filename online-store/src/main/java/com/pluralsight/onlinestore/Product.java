@@ -32,7 +32,7 @@ public class Product {
         this.price = price;
     }
 
-    public void setElectronics(String department) {
+    public void setDepartment(String department) {
         this.department = department;
     }
 
@@ -48,7 +48,7 @@ public class Product {
         return price;
     }
 
-    public String getElectronics() {
+    public String getDepartment() {
         return department;
     }
 

@@ -8,13 +8,12 @@ import java.util.Scanner;
 
 
 public class StoreFront {
+    //Public variables = bad practice :(
 
-
-    public static HashMap<String, Product> fillStore() throws IOException {
+    public static HashMap<String, Product> fillStore(HashMap<String, Product> inventory) throws IOException {
         //initializing
         BufferedReader buffRead;
         buffRead = new BufferedReader(new FileReader("./src/main/resources/DataFiles/products.csv"));
-        HashMap<String, Product> inventory = new HashMap();
 
         //Skips heading line and adds items to array list
         String input = buffRead.readLine();
@@ -30,10 +29,9 @@ public class StoreFront {
         Scanner scan = new Scanner(System.in);
         HashMap<String, Product> inventory = new HashMap<>();
         HashMap<String, Product> cart = new HashMap<>();
-        HashMap<String, Product>[] store = new HashMap[]{inventory, cart};
 
         try {
-            store[0] = fillStore();
+            fillStore(inventory);
         } catch (IOException e) {
             System.out.println("Failed to fill store!");
         }
@@ -52,22 +50,20 @@ public class StoreFront {
             //Switch case did NOT work :(
             if (userIsDone.equalsIgnoreCase("P")) {
                 try {
-                    store = DisplayAllProducts.displayAllProducts(store[0], store[1]);
+                    DisplayAllProducts.displayAllProducts(inventory, cart);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
 
             } else if (userIsDone.equalsIgnoreCase("C")) {
-                try{
-                store = DisplayCart.displayCart(store[0], store[1]);
-                }catch(InterruptedException e) {
+                try {
+                    DisplayCart.displayCart(inventory, cart);
+                } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-            }
-            else if(userIsDone.equalsIgnoreCase("E")){
+            } else if (userIsDone.equalsIgnoreCase("E")) {
                 return;
-            }
-            else{
+            } else {
                 System.out.println();
                 Thread.sleep(1000);
             }
