@@ -5,27 +5,32 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class DisplayCart {
-    private static Scanner scan = new Scanner(System.in);
 
     public static void displayCart(HashMap<String, Product> inventory, HashMap<String, Product> cart) throws InterruptedException {
-        for (String key : cart.keySet()) {
-            System.out.println(cart.get(key));
-        }
-        if(cart.size() == 0){
-            System.out.println("\033[1;31mTheres nothing in your cart!\033[1;0m");
-        }
-        System.out.println("""
-                Checkout       (C)
-                Remove Product (R)
-                Go Back        (B)
-                """);
-        String userInput = scan.nextLine();
-        while (!userInput.equalsIgnoreCase("b")) {
-            if (userInput.equalsIgnoreCase("c")) {
+        Scanner scan = new Scanner(System.in);
+        String userInput = "";
+        while (!userInput.equalsIgnoreCase("3")) {
+            for (String key : cart.keySet()) {
+                System.out.println(cart.get(key));
+            }
+            if (cart.size() == 0) {
+                System.out.println("\n \033[1;31mTheres nothing in your cart!\033[1;0m");
+            }
+            System.out.print("""
+                    Checkout       (1)
+                    Remove Product (2)
+                    Go Back        (3)
+                    """);
+            userInput = scan.nextLine();
+            if (userInput.equalsIgnoreCase("1")) {
                 System.out.println("I dont feel like doing this right now :(");
                 return;
-            } else if (userInput.equalsIgnoreCase("r")) {
+            } else if (userInput.equalsIgnoreCase("2")) {
                 String isUserFinished = "n";
+                if (cart.size() == 0) {
+                    System.out.println("\nYou can't remove what you don't have!");
+                    break;
+                }
                 do {
                     ArrayList<Product> tempList = new ArrayList<>();
                     System.out.println("Enter the name of the product you want to remove from your cart");
@@ -53,6 +58,11 @@ public class DisplayCart {
                     }
                 } while (isUserFinished.equalsIgnoreCase("n"));
                 break;
+            } else if (userInput.equals("3")) {
+                return;
+            } else {
+                System.out.println("Please choose one of the options");
+                Thread.sleep(1000);
             }
         }
     }

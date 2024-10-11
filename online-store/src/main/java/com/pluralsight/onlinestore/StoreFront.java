@@ -37,40 +37,38 @@ public class StoreFront {
         }
 
         System.out.print("""
-                    
-                    
+                
+                
                   Welcome to my online store!
-                    
+                
                 """);
 
         String userIsDone = "";
         while (!userIsDone.equals("e")) {
-            System.out.println("""
-                    Display All Products (P)
-                    
-                    Display Your Cart    (C)
-                    
-                    Exit Program         (E)
+            System.out.print("""
+                    Display All Products (1)
+                    Display Your Cart    (2)
+                    Exit Program         (3)
                     """);
             userIsDone = scan.nextLine().toLowerCase();
             //Switch case did NOT work :(
-            if (userIsDone.equalsIgnoreCase("P")) {
+            if (userIsDone.equals("1")) {
                 try {
                     DisplayAllProducts.displayAllProducts(inventory, cart);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
 
-            } else if (userIsDone.equalsIgnoreCase("C")) {
+            } else if (userIsDone.equals("2")) {
                 try {
                     DisplayCart.displayCart(inventory, cart);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-            } else if (userIsDone.equalsIgnoreCase("E")) {
+            } else if (userIsDone.equals("3")) {
                 return;
             } else {
-                System.out.println();
+                System.out.println("Please pick one of the options\n");
                 Thread.sleep(1000);
             }
         }

@@ -5,19 +5,23 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class SearchProducts {
-    private static Scanner scan = new Scanner(System.in);
+
 
     public static void addToCart(HashMap<String, Product> inventory, HashMap<String, Product> cart) throws InterruptedException {
+        Scanner scan = new Scanner(System.in);
         String isUserFinished = "n";
         do {
             ArrayList<Product> tempList = new ArrayList<>();
-            System.out.println("Enter the name of the item you want to add");
+            System.out.println("Enter the name of the item you want to add (enter \"x\" to exit)");
             String productName = scan.nextLine();
             for (Product item : inventory.values()) {
                 if (item.getProductName().equalsIgnoreCase(productName)) {
                     cart.put(item.getSku(), item);
                     tempList.add(item);
                 }
+            }
+            if (productName.equals("x")) {
+                return;
             }
             if (tempList.isEmpty()) {
                 System.out.println("We don't have that item!");
@@ -33,7 +37,8 @@ public class SearchProducts {
         } while (isUserFinished.equalsIgnoreCase("n"));
     }
 
-    public static void searchByDepartment(HashMap<String, Product> inventory, HashMap<String, Product> cart, String searchBy) throws InterruptedException {
+    public static void searchByValue(HashMap<String, Product> inventory, HashMap<String, Product> cart, String searchBy) throws InterruptedException {
+        Scanner scan = new Scanner(System.in);
         ArrayList<Product> tempList = new ArrayList();
         while (tempList.isEmpty()) {
             System.out.println("What " + searchBy + " are you looking for? (enter \"x\" to exit search)");
@@ -74,7 +79,12 @@ public class SearchProducts {
             if (value.equalsIgnoreCase("x")) {
                 return;
             } else if (tempList.isEmpty()) {
-                System.out.println("We didn't find any " + searchBy + " with that name!");
+                if (searchBy.equals("price")) {
+                    System.out.println("\033[1;31mThere is no price under that amount!\033[1;0m");
+                } else {
+                    System.out.println("\033[1;31mWe didn't find any " + searchBy + "s with that name!\033[1;0m");
+                }
+                return;
             } else {
                 //Add a number system to buy specific items
                 addToCart(inventory, cart);
@@ -85,36 +95,37 @@ public class SearchProducts {
 
 
     public static void searchItem(HashMap<String, Product> inventory, HashMap<String, Product> cart) throws InterruptedException {
+        Scanner scan = new Scanner(System.in);
         String searchInput = "";
         while (!searchInput.equalsIgnoreCase("e")) {
             System.out.println("""
                     What would you like to search by?
-                    Department (D)
-                    Price      (P)
-                    Name       (N)
-                    SKU        (S)
-                    Exit       (E)
+                    Department   (1)
+                    Price        (2)
+                    Name         (3)
+                    SKU          (4)
+                    Exit         (5)
                     """);
             searchInput = scan.nextLine().toLowerCase();
 
             switch (searchInput) {
-                case "d": {
-                    searchByDepartment(inventory, cart, "department");
+                case "1": {
+                    searchByValue(inventory, cart, "department");
                 }
                 break;
-                case "p": {
-                    searchByDepartment(inventory, cart, "price");
+                case "2": {
+                    searchByValue(inventory, cart, "price");
                 }
                 break;
-                case "n": {
-                    searchByDepartment(inventory, cart, "name");
+                case "3": {
+                    searchByValue(inventory, cart, "name");
                 }
                 break;
-                case "s": {
-                    searchByDepartment(inventory, cart, "SKU");
+                case "4": {
+                    searchByValue(inventory, cart, "SKU");
                 }
                 break;
-                case "e": {
+                case "5": {
                     return;
                 }
             }
