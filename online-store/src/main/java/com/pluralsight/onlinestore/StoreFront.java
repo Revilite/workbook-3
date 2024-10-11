@@ -29,16 +29,6 @@ public class StoreFront {
         HashMap<String, Product> inventory = new HashMap<>();
         HashMap<String, Product> cart = new HashMap<>();
 
-        Product item1 = new Product("dasd", "something", 10, "electronics");
-        Product item2 = new Product("asfsagd", "nothing", 1123.12, "stores");
-        Product item3 = new Product("sdfge", "everything", 123.23, "games");
-        Product item4 = new Product("sdfasf", "Desktop PC Computer Intel Core I5", 112, "something else entirley");
-        cart.put(item1.getSku(), item1);
-        cart.put(item2.getSku(), item2);
-        cart.put(item3.getSku(), item3);
-        cart.put(item4.getSku(), item4);
-
-
         //Fills inventory with items
         try {
             fillStore(inventory);
