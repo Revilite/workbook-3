@@ -14,7 +14,6 @@ public class StoreFront {
         //initializing
         BufferedReader buffRead;
         buffRead = new BufferedReader(new FileReader("./src/main/resources/DataFiles/products.csv"));
-
         //Skips heading line and adds items to array list
         String input = buffRead.readLine();
         while ((input = buffRead.readLine()) != null) {
@@ -30,20 +29,27 @@ public class StoreFront {
         HashMap<String, Product> inventory = new HashMap<>();
         HashMap<String, Product> cart = new HashMap<>();
 
+        //Fills inventory with items
         try {
             fillStore(inventory);
         } catch (IOException e) {
             System.out.println("Failed to fill store!");
         }
-        System.out.println("""
-                    Welcome to my online store!
+
+        System.out.print("""
+                    
+                    
+                  Welcome to my online store!
+                    
                 """);
 
         String userIsDone = "";
         while (!userIsDone.equals("e")) {
             System.out.println("""
                     Display All Products (P)
+                    
                     Display Your Cart    (C)
+                    
                     Exit Program         (E)
                     """);
             userIsDone = scan.nextLine().toLowerCase();
