@@ -8,86 +8,75 @@ public class SearchProducts {
     private static Scanner scan = new Scanner(System.in);
 
     public static void addToCart(HashMap<String, Product> inventory, HashMap<String, Product> cart) throws InterruptedException {
-        boolean invalidSKU = true;
-        while (invalidSKU) {
-            System.out.println("Type the SKU of the item to add to the cart");
-            String userSKU = scan.nextLine().toUpperCase();
-            if (inventory.containsKey(userSKU)) {
-                cart.put(userSKU, inventory.get(userSKU));
-                inventory.remove(userSKU);
-                invalidSKU = false;
-            }
-            if (invalidSKU) {
-                System.out.println("Invalid SKU");
-            } else {
-                System.out.println("Added Successfully!");
-                Thread.sleep(1000);
-            }
-        }
-    }
-
-
-    public static void searchByDepartment(HashMap<String, Product> inventory, HashMap<String, Product> cart) throws InterruptedException {
-        String departmentSearch = "l";
-        ArrayList<Product> tempList = new ArrayList();
-
-        while (departmentSearch.equalsIgnoreCase("l")) {
-            System.out.println("What department are you looking for? (enter \"x\" to exit search)");
-            String department = scan.nextLine();
+        String isUserFinished = "n";
+        do {
+            ArrayList<Product> tempList = new ArrayList<>();
+            System.out.println("Enter the name of the item you want to add");
+            String productName = scan.nextLine();
             for (Product item : inventory.values()) {
-                //Boolean variable ignores if statement????
-                if (item.getDepartment().equalsIgnoreCase(department)) {
-                    System.out.println(item);
+                if (item.getProductName().equalsIgnoreCase(productName)) {
+                    cart.put(item.getSku(), item);
                     tempList.add(item);
                 }
             }
-            if (department.equalsIgnoreCase("x")) {
+            if (tempList.isEmpty()) {
+                System.out.println("We don't have that item!");
+            } else {
+                inventory.remove(tempList.get(0).getSku());
+                System.out.println("Are you done adding items?");
+                isUserFinished = scan.nextLine();
+            }
+        } while (isUserFinished.equalsIgnoreCase("n"));
+    }
+
+    public static void searchByDepartment(HashMap<String, Product> inventory, HashMap<String, Product> cart, String searchBy) throws InterruptedException {
+        ArrayList<Product> tempList = new ArrayList();
+        while (tempList.isEmpty()) {
+            System.out.println("What " + searchBy + " are you looking for? (enter \"x\" to exit search)");
+            String value = scan.nextLine();
+            for (Product item : inventory.values()) {
+                //Boolean variable ignores if statement????
+                switch (searchBy) {
+                    case "department": {
+                        if (item.getDepartment().equalsIgnoreCase(value)) {
+                            System.out.println(item);
+                            tempList.add(item);
+                        }
+                    }
+                    break;
+                    case "name": {
+                        if (item.getProductName().equalsIgnoreCase(value)) {
+                            System.out.println(item);
+                            tempList.add(item);
+                        }
+                    }
+                    break;
+                    case "price": {
+                        if (item.getPrice() <= Double.parseDouble(value)) {
+                            System.out.println(item);
+                            tempList.add(item);
+                        }
+                    }
+                    break;
+                    case "SKU": {
+                        if (item.getSku().equalsIgnoreCase(value)) {
+                            System.out.println(item);
+                            tempList.add(item);
+                        }
+                    }
+                    break;
+                }
+            }
+            if (value.equalsIgnoreCase("x")) {
                 return;
             } else if (tempList.isEmpty()) {
-                System.out.println("We didn't find any departments with that name!");
+                System.out.println("We didn't find any " + searchBy + " with that name!");
             } else {
                 //Add a number system to buy specific items
                 addToCart(inventory, cart);
                 return;
             }
         }
-    }
-
-    public static void searchBySKU(HashMap<String, Product> inventory, HashMap<String, Product> cart) {
-        boolean invalidSKU = true;
-        // Prints twice, Have no idea why
-        do {
-            System.out.println("What is the SKU of the item your looking for? (type \"x\" to exit)");
-            String userSKU = scan.nextLine().toUpperCase();
-            if (userSKU.equalsIgnoreCase("x")) {
-                return;
-            }
-            if (inventory.containsKey(userSKU)) {
-                invalidSKU = false;
-            }
-            if (invalidSKU) {
-                System.out.println("Invalid SKU");
-            } else {
-                System.out.println(inventory.get(userSKU));
-            }
-            //Gets user input if they want to save this item or not
-            System.out.println("Would you like to add this item to your cart? (Y/N)");
-            String addItemFromSearch = scan.nextLine().toLowerCase();
-
-            //Adds item and removes from inventory
-            if (addItemFromSearch.equals("y")) {
-                cart.put(userSKU, inventory.get(userSKU));
-                inventory.remove(userSKU);
-                System.out.println("Added Successfully!");
-            } else {
-                System.out.println("That isn't a choice");
-            }
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        } while (invalidSKU);
     }
 
 
@@ -106,19 +95,23 @@ public class SearchProducts {
 
             switch (searchInput) {
                 case "d": {
-                    searchByDepartment(inventory, cart);
+                    searchByDepartment(inventory, cart, "department");
                 }
+                break;
                 case "p": {
-                    //searchByPrice(inventory, cart);
+                    searchByDepartment(inventory, cart, "price");
                 }
+                break;
                 case "n": {
-                    //searchByName(inventory, cart);
+                    searchByDepartment(inventory, cart, "name");
                 }
+                break;
                 case "s": {
-                    searchBySKU(inventory, cart);
+                    searchByDepartment(inventory, cart, "SKU");
                 }
+                break;
                 case "e": {
-                    break;
+                    return;
                 }
             }
         }

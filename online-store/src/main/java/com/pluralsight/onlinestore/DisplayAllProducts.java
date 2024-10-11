@@ -6,8 +6,6 @@ import java.util.Scanner;
 public class DisplayAllProducts {
     private static Scanner scan = new Scanner(System.in);
 
-
-
     //Main method
     public static void displayAllProducts(HashMap<String, Product> inventory, HashMap<String, Product> cart) throws InterruptedException {
         String productPageChoice = "";
