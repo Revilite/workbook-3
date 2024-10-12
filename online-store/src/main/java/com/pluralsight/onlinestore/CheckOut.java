@@ -72,6 +72,7 @@ public class CheckOut {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                toCheckOut(cart, totalPrice, cashDouble);
                 return;
             }
 

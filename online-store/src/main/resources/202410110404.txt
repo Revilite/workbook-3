@@ -1,9 +1,0 @@
-Order Date: 11/10/2024 04:04              
-something                          $10.00     
-everything                         $123.23    
-Desktop PC Computer Intel Core I5  $112.00    
-nothing                            $1123.12   
-
-Total:         $1368.35
-Amount Paid:   $2000.00
-Change Given:  $ 631.65
