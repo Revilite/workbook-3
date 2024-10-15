@@ -1,5 +1,7 @@
 package com.pluralsight.application;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -28,16 +30,19 @@ public class MainScreen {
 
             switch (mainChoice) {
                 case "1": {
-                    System.out.println("Input your deposit information");
-                    String depositInfo = scan.nextLine();
                     try {
-                        AddDeposit.deposit(depositInfo);
+                        AddDeposit.deposit();
                     } catch (IOException e) {
                         System.out.println("Unable to deposit information :(");
                     }
+                    break;
                 }
-                default:{
+                case "2":{
+
+                }
+                default: {
                     System.out.println("Please choose one of the options :)");
+                    break;
                 }
             }
 
